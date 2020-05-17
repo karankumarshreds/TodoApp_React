@@ -1,6 +1,7 @@
 import React, {Component} from 'react';
 import ListItem from '../ListItem/ListItem'
 import CreateForm from '../CreateForm/CreateForm'
+import './TodoList.css'
  
 class TodoList extends Component {
 
@@ -10,6 +11,7 @@ class TodoList extends Component {
         ]
     }
 
+    //passed down as create prop
     stateHandler = (data) => {
         this.setState((state) => {
             return {
@@ -30,7 +32,6 @@ class TodoList extends Component {
         })
     }
 
-    //8, 'hello again' || old = {id: 8, task: 'hello'}
     update = (id, data) => {
         const newList = this.state.todos.map((each)=>{
             if(each.id === id){
@@ -43,6 +44,18 @@ class TodoList extends Component {
         console.log(newList);
     }
 
+    //passed down to ListItem as toggleComplete
+    toggleCompletion = (id) => {
+        const newList = this.state.todos.map((el) => {
+            if(el.id === id){
+                return {...el, completed: !el.completed};
+            } else {
+                return el;
+            }
+        });
+        this.setState({ todos : newList });
+    }
+
     render() {
         let list = this.state.todos.map((each) => {
             return (
@@ -52,11 +65,15 @@ class TodoList extends Component {
                     delete={this.deleteHandler}
                     task={each.task}
                     update={this.update}
+                    completed={each.completed}
+                    toggleComplete={this.toggleCompletion}
                     />
             ) 
         })
         return (
-            <div>
+            <div className="TodoList">
+                <h1> To Do List !</h1>
+                <span>Make sure you never miss a thing</span>
                 <CreateForm 
                 create={this.stateHandler}
                 />

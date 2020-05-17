@@ -1,10 +1,11 @@
 import React, {Component} from 'react';
 import { v4 as uuidv4 } from 'uuid';
-
+import './CreateForm.css';
 class CreateForm extends Component {
     
     state = {
         task: '', 
+        completed: false
     }
 
     changeHandler(event) {
@@ -22,7 +23,7 @@ class CreateForm extends Component {
 
     render() {
         return (
-            <div>
+            <div className="Form">
                 <form onSubmit={this.submitHandler.bind(this)}>
                     <input 
                     onChange={this.changeHandler.bind(this)}

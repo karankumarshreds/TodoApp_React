@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-
+import './ListItem.css'
 
 class List extends Component {
     
@@ -25,6 +25,9 @@ class List extends Component {
         this.toggle();
         this.props.update(this.props.id, this.state.task);
     }
+    toggleHandler() {
+        this.props.toggleComplete(this.props.id);
+    }
 
     render() {
 
@@ -32,7 +35,9 @@ class List extends Component {
         if(this.state.editing) {
             whatToShow = (
                 <div>
-                    <form onSubmit={this.submitHandler.bind(this)}>
+                    <form 
+                    onSubmit={this.submitHandler.bind(this)}
+                    className="ListItem">
                         <input 
                         name='task'
                         value={this.state.task}
@@ -44,16 +49,21 @@ class List extends Component {
             )
         } else {
             whatToShow = (
-                <div>
-                    <h5>{this.props.task}</h5>
-                    <button onClick={this.toggle.bind(this)}>edit</button>
-                    <button onClick={this.deleteHandler.bind(this)}>X</button>
+                <div className="ListItem">
+                    <span 
+                    className={this.props.completed ? "Completed" : "NotCompleted"}
+                    onClick={this.toggleHandler.bind(this)}
+                    >{this.props.task}</span>
+                    <span>
+                        <i onClick={this.toggle.bind(this)} className="far fa-edit"></i>
+                        <i onClick={this.deleteHandler.bind(this)} class="far fa-trash-alt"></i>
+                    </span>
                 </div>
             )
         }
 
         return (
-            <div>
+            <div className="Main">
             {whatToShow}
             </div>
         )
